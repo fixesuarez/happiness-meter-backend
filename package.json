@@ -1,14 +1,20 @@
 {
   "name": "happiness-meter-backend",
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "type": "module",
   "scripts": {
     "start": "npx tsx --env-file=.env --watch  src/index.ts"
   },
+  "imports": {
+    "#src/*": "./src/*"
+  },
   "dependencies": {
-    "express": "^5.0.1"
+    "cors": "^2.8.5",
+    "express": "^5.0.1",
+    "mongodb": "^6.14.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.8",
     "ts-node": "^10.9.2",
