@@ -7,6 +7,8 @@ import {
 } from "#src/models/score";
 import { ObjectId } from "mongodb";
 import { fillMissingSundays } from "#src/controllers/score";
+import { getUTCDate } from "#src/utils/dates";
+import dayjs from "dayjs";
 
 const router = Router();
 
@@ -16,7 +18,7 @@ router.post("/", async (req, res) => {
   const body: ScorePayload = {
     ...req.body,
     user_id: new ObjectId(req.body.user_id as string),
-    date: new Date(req.body.date),
+    date: getUTCDate(req.body.date),
   };
 
   const existingScoreQuery: ExistingScoreQuery = {
@@ -39,7 +41,7 @@ router.patch("/:id", async (req, res) => {
     ...req.body,
     _id: new ObjectId(req.body._id as string),
     user_id: new ObjectId(req.body.user_id as string),
-    date: new Date(req.body.date),
+    date: getUTCDate(req.body.date),
   };
 
   const existingScoreQuery: ExistingScoreQuery = {
@@ -79,7 +81,10 @@ router.get("/:user_id/", async (req, res) => {
     comment: item.comment,
   }));
 
-  const scoresFilled = fillMissingSundays(userScores);
+  const scoresFilled = fillMissingSundays(userScores).map((item) => ({
+    ...item,
+    date: dayjs(item.date).format("DD-MM-YYYY"),
+  }));
 
   res.status(200).send(scoresFilled);
 });

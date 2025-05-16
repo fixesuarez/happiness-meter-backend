@@ -6,9 +6,9 @@ export function fillMissingSundays(entries: ScoreEntry[]): ScoreEntry[] {
   const today = dayjs();
   const lastSunday = today.subtract(today.day(), "day");
 
-  const allSundays: ScoreEntry[] = [];
+  const allSundayScores: ScoreEntry[] = [];
   const existingDates = new Set(
-    entries.map((entry) => dayjs(entry.date).format("YYYY/MM/DD")),
+    entries.map((entry) => dayjs(entry.date).format("YYYY-MM-DD")),
   );
 
   for (
@@ -16,13 +16,13 @@ export function fillMissingSundays(entries: ScoreEntry[]): ScoreEntry[] {
     date.isSame(lastSunday) || date.isBefore(lastSunday);
     date = date.add(7, "day")
   ) {
-    const formattedDate = date.format("YYYY/MM/DD");
+    const formattedDate = date.format("YYYY-MM-DD");
     if (!existingDates.has(formattedDate)) {
-      allSundays.push({ date: date.toDate(), score: null });
+      allSundayScores.push({ date: date.toDate(), score: null });
     }
   }
 
-  return [...entries, ...allSundays].sort((a, b) =>
+  return [...entries, ...allSundayScores].sort((a, b) =>
     dayjs(a.date).diff(dayjs(b.date)),
   );
 }
