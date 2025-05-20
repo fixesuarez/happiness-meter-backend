@@ -15,10 +15,10 @@ app.get("/", (_, res: Response) => {
   res.json({ message: "Welcome to the Express + TypeScript Server!" });
 });
 
-const TEN_MINUTES = 10 * 60 * 1000;
+const FIVE_MINUTES = 5 * 60 * 1000;
 setInterval(() => {
   console.log("Keep server alive");
-}, TEN_MINUTES);
+}, FIVE_MINUTES);
 
 app.listen(PORT, () => {
   console.log("The server is running");
